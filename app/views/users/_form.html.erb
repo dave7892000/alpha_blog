@@ -24,8 +24,10 @@
 </p>
 
 <p>
-    <%= f.submit "Sign up" %>
+    <%= f.submit(@user.new_record? ?  "Sign up" : "Update Account",) %>
 </p>
 <% end %>
+<%# the @user.new_record is testing for if this is a new user, the button will say signup, for the new users sign up page- otherwise, it will say Update Account%>
+
 
 <%= link_to 'return to articles listing', articles_path %>
