@@ -1,5 +1,10 @@
 class UsersController < ApplicationController
     
+    def show
+        @user = User.find(params[:id])
+    end
+
+
     def new
         @user = User.new
     end
@@ -7,12 +12,32 @@ class UsersController < ApplicationController
     def create
         @user = User.new(user_params)
         if @user.save
-            flash[:notice] = "Welcome to the alpha blog #{user.username}, you have successfully signed up"
-            redirect_to = articles_path
+            flash[:notice] = "Welcome to the alpha blog #{@user.username}, you have successfully signed up"
+            redirect_to articles_path
         else
-            render 'new'
+            @test = "hello"
+            render :new, {status: :unprocessable_entity}
         end
     end
+
+    def edit
+        @user = User.find(params[:id])
+    end
+
+    def update
+        @user = User.find(params[:id])
+        if @user.update(user_params) #this whitelists the attriubtes that comes throguh the params hash
+            flash[:notice] = "Your account information was successfully updated."
+            redirect_to articles_path
+        else
+            @test = "Hello"
+            render :new, {status: :unprocessable_entity}
+        end
+
+    end
+
+
+
 
     #below is the white listing of what params we will require
     private
